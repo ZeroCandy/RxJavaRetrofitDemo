@@ -3,6 +3,8 @@ package com.github.zerocandy.rxredemo.bean;
 import java.util.List;
 
 /**
+ * 该实体可被HttpResult替代
+ *
  * Created by 帅阳 on 2017/1/16.
  */
 
