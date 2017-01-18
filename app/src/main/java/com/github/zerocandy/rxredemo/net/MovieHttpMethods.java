@@ -2,7 +2,7 @@ package com.github.zerocandy.rxredemo.net;
 
 import com.github.zerocandy.rxredemo.bean.HttpResult;
 import com.github.zerocandy.rxredemo.bean.Subject;
-import com.github.zerocandy.rxredemo.net.Service.MovieService;
+import com.github.zerocandy.rxredemo.net.service.MovieService;
 import com.github.zerocandy.rxredemo.net.exception.EmptyResultException;
 
 import java.util.List;

@@ -2,13 +2,12 @@ package com.github.zerocandy.rxredemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.zerocandy.rxredemo.bean.Subject;
 import com.github.zerocandy.rxredemo.net.MovieHttpMethods;
+import com.github.zerocandy.rxredemo.net.ProgressSubscriber;
 
 import java.util.List;
 
@@ -16,16 +15,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Subscriber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProgressSubscriber.OnNextListener<List<Subject>> {
     private static final String TAG = MainActivity.class.getName();
 
     Unbinder mUnbinder;
 
     @BindView(R.id.tv_result)
     TextView mResultTv;
-    private Subscriber<List<Subject>> mSubscriber;
+
+    private ProgressSubscriber<List<Subject>> mProgressSubscriber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,32 +54,15 @@ public class MainActivity extends AppCompatActivity {
     private void getMovie() {
         mResultTv.setText("");
 
-        mSubscriber = new Subscriber<List<Subject>>() {
-            @Override
-            public void onCompleted() {
-                Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
-            }
+        mProgressSubscriber = new ProgressSubscriber<>(MainActivity.this, MainActivity.this);
+        MovieHttpMethods.getInstance().getTopMoive(mProgressSubscriber, 250, 10);
 
-            @Override
-            public void onError(Throwable e) {
-                mResultTv.setText(e.getMessage());
-            }
-
-            @Override
-            public void onNext(List<Subject> subjects) {
-                mResultTv.setText(subjects.size() + "");
-            }
-        };
-        MovieHttpMethods.getInstance().getTopMoive(mSubscriber, 250, 10);
     }
 
-    private void cancel() {
-        Log.i(TAG,"蹭蹭");
-        if(mSubscriber != null && mSubscriber.isUnsubscribed()){
-            Log.i(TAG,"进来了");
-            // 因为网络请求的操作不能在主线程中，所以取消订阅的操作必须在IO进程中进行
-            mSubscriber.unsubscribe();
-            mResultTv.setText("你已经狠心的取消了！！！");
-        }
+    private void cancel() {}
+
+    @Override
+    public void onNext(List<Subject> subjects) {
+        mResultTv.setText(subjects.size() + "");
     }
 }
