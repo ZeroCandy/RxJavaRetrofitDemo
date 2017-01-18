@@ -1,4 +1,4 @@
-package com.github.zerocandy.rxredemo.net.Service;
+package com.github.zerocandy.rxredemo.net.service;
 
 
 import com.github.zerocandy.rxredemo.bean.HttpResult;
