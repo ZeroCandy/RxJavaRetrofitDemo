@@ -26,12 +26,18 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressDial
     public void onCompleted() {
         dismissProgressDialog();
         Toast.makeText(mContext, "Completed", Toast.LENGTH_SHORT).show();
+        if(!this.isUnsubscribed()){
+            this.unsubscribe();
+        }
     }
 
     @Override
     public void onError(Throwable e) {
         dismissProgressDialog();
         Toast.makeText(mContext, "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        if(!this.isUnsubscribed()){
+            this.unsubscribe();
+        }
     }
 
     @Override
@@ -68,4 +74,5 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressDial
     public interface OnNextListener<T>{
         void onNext(T t);
     }
+
 }

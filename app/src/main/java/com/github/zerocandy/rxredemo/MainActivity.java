@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements ProgressSubscribe
         mResultTv.setText("");
 
         mProgressSubscriber = new ProgressSubscriber<>(MainActivity.this, MainActivity.this);
-        MovieHttpMethods.getInstance().getTopMoive(mProgressSubscriber, 250, 10);
+        MovieHttpMethods.getInstance().getTopMoive(mProgressSubscriber, 0, 10);
     }
 
     @Override
