@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.zerocandy.rxredemo.bean.Subject;
 import com.github.zerocandy.rxredemo.net.MovieHttpMethods;
-import com.github.zerocandy.rxredemo.net.ProgressSubscriber;
+import com.github.zerocandy.rxredemo.net.subscriber.ProgressSubscriber;
 
 import java.util.List;
 
@@ -56,13 +57,16 @@ public class MainActivity extends AppCompatActivity implements ProgressSubscribe
 
         mProgressSubscriber = new ProgressSubscriber<>(MainActivity.this, MainActivity.this);
         MovieHttpMethods.getInstance().getTopMoive(mProgressSubscriber, 250, 10);
-
     }
-
-    private void cancel() {}
 
     @Override
     public void onNext(List<Subject> subjects) {
         mResultTv.setText(subjects.size() + "");
     }
+
+    private void cancel() {
+        Toast.makeText(this, "这个取消并没有什么卵用哈哈哈哈", Toast.LENGTH_SHORT).show();
+    }
+
+
 }

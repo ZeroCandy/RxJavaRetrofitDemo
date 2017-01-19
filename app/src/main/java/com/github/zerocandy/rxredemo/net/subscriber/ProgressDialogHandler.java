@@ -1,4 +1,4 @@
-package com.github.zerocandy.rxredemo.net;
+package com.github.zerocandy.rxredemo.net.subscriber;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,6 +43,7 @@ public class ProgressDialogHandler extends Handler {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mContext);
             mProgressDialog.setCancelable(mCancelable);
+            mProgressDialog.setMessage("正在加载...");
             if (mCancelable && mListener != null) {
                 mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
